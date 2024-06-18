@@ -9,7 +9,9 @@ type ProductListItemProps = {
 const ProductListItem = ({product}:ProductListItemProps) => {
     return (
       <View style={styles.container}>
-    <Image source={{uri: product.image|| defaultPizzaImage}} style={styles.image}/>
+    <Image source={{uri: product.image|| defaultPizzaImage}} style={styles.image}
+        resizeMode='contain'
+    />
        <Text style={styles.title}>
           {product.name }
        </Text>
@@ -24,12 +26,14 @@ const ProductListItem = ({product}:ProductListItemProps) => {
 
 const styles = StyleSheet.create({
     container: {
-   
+        
         backgroundColor: 'white',
         borderRadius: 20,
         padding: 10,
         //overflow is used to hide the overflow of the image
         overflow: 'hidden',
+        flex: 1,
+        maxWidth: '50%',
       },
       
       image: {
