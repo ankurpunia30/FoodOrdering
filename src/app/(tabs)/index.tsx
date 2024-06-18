@@ -1,29 +1,20 @@
-import { StyleSheet } from 'react-native';
+import { Text, View} from '@/src/components/Themed';
+import products from '@/assets/data/products';
+import ProductListItem from '@/src/components/ProductListItem';
+const product = products;
+export default function MenuScreen() {
 
-import EditScreenInfo from '@/src/components/EditScreenInfo';
-import { Text, View } from '@/src/components/Themed';
-
-export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
+    <View >
+      <ProductListItem
+      product={product[0]}
+      />
+       <ProductListItem
+      product={product[1]}
+      />
       
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+
