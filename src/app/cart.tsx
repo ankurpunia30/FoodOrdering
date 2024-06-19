@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar'
 import { CartContext,useCart } from '../provider/CartProvider'
 import { FlatList } from 'react-native'
 import CartListItem from '../components/CartListItem'
+import Button from '../components/Button'
 
 //why to use context not the states
 //because the context is a global state that can be used in any component
@@ -13,15 +14,17 @@ import CartListItem from '../components/CartListItem'
 //prop drilling is passing the props from the parent to the child component
 //context is used to avoid prop drilling
 const CartScreen = () => {
-  const {items}=useCart();
+  const {items,total}=useCart();
 
   return (
-    <View>
+    <View style={{padding:10}}>
       <FlatList
       data={items}
       renderItem={({item})=><CartListItem cartItem={item}/>} 
-      contentContainerStyle={{padding:10,gap:10}}     
+      contentContainerStyle={{gap:10}}     
       />
+      <Text style={{marginTop:20,fontSize:20,fontWeight:'500'}}>Total:${total}</Text>
+      <Button text="Checkout"/>
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
   
     </View>
