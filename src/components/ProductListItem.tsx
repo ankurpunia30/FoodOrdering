@@ -2,16 +2,20 @@ import { View, Text,StyleSheet,Image ,Pressable} from 'react-native'
 import React, { PropsWithChildren } from 'react'
 import Colors from '../constants/Colors';
 import { Product } from '../types';
-import { Link } from 'expo-router';
+import { Link, useSegments } from 'expo-router';
 
 export const defaultPizzaImage='https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png'
 type ProductListItemProps = {
     product: Product;
   };
 const ProductListItem = ({product}:ProductListItemProps) => {
-    return (
+    const segment =useSegments();
+    console.log(segment)
+    
+    { /* 1.linked the different parts with admin and user using segment */};
+  return (
         <Link href=
-    { `/menu/${product.id}`} asChild>
+    { `/${segment[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
     <Image source={{uri: product.image|| defaultPizzaImage}} style={styles.image}
         resizeMode='contain'
