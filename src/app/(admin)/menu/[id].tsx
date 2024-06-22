@@ -1,4 +1,4 @@
-import { View, Text ,Image,StyleSheet,Pressable} from 'react-native'
+import { View, Text ,Image,StyleSheet,Pressable, ActivityIndicator} from 'react-native'
 import React from 'react'
 import { Link } from 'expo-router';
 import { useLocalSearchParams, useRouter } from 'expo-router'
@@ -11,22 +11,25 @@ import { useCart } from '@/src/provider/CartProvider';
 import { PizzaSize } from '@/src/types';
 import { FontAwesome } from '@expo/vector-icons';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { useProduct } from '.';
 const sizes:PizzaSize[]=['S','M','L','XL'];
 const ProductDetailsScreen = () => {
   //useLocalSearchParams is a hook that is used to get the id from the url
-  const {id}=useLocalSearchParams();
+  const {id:idString}=useLocalSearchParams();
+  const id=parseFloat(typeof idString==='string'?idString:'');
+  const {data:product,error,isLoading}=useProduct(id);
+
   const [selectedSize,setSelectedSize]=useState<PizzaSize>('M');
 const {addItem}=useCart();
-  const product=products.find((product)=>product.id.toString()===id);
+  //const product=products.find((product)=>product.id.toString()===id);
   const router=useRouter();
   const addToCart=()=>{
     if(!product) return;
     addItem(product,selectedSize);
     router.push('/cart');
   }
-  
-  if(!product) 
-    return <Text>Product not found</Text>
+  if(isLoading) return <ActivityIndicator/>
+  if(error) return <Text>{error.message}</Text>
   return (
     <View style={styles.container}>
       <Stack.Screen 
