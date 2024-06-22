@@ -1,13 +1,14 @@
 import { PropsWithChildren, createContext,useContext, useState } from "react";
-import { CartItem,Product } from "../types";
+import { CartItem, } from "../types";
 import {randomUUID} from 'expo-crypto';
+import { Tables } from "../database.types";
 type CartType={
     items:CartItem[];
-    addItem:(product:Product,size:CartItem['size'])=>void;
+    addItem:(product:Tables<'products'>,size:CartItem['size'])=>void;
     updateQuantity:(itemId:string,quantity:-1|1)=>void;
     total:number;
 }
-
+type Product=Tables<'products'>;
 //cart context is used to manage the cart state in the app
 export const CartContext = createContext<CartType>({
     items:[],

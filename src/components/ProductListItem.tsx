@@ -1,12 +1,14 @@
 import { View, Text,StyleSheet,Image ,Pressable} from 'react-native'
 import React, { PropsWithChildren } from 'react'
 import Colors from '../constants/Colors';
-import { Product } from '../types';
+//import { Product } from '../types';
 import { Link, useSegments } from 'expo-router';
+import { Tab } from 'react-native-elements/dist/tab/Tab';
+import { Tables } from '../database.types';
 
 export const defaultPizzaImage='https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png'
 type ProductListItemProps = {
-    product: Product;
+    product: Tables<'products'>;
   };
 const ProductListItem = ({product}:ProductListItemProps) => {
     const segment =useSegments();
