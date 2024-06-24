@@ -2,16 +2,11 @@ import { PropsWithChildren, createContext,useContext, useState } from "react";
 import { CartItem, } from "../types";
 import {randomUUID} from 'expo-crypto';
 import { Tables } from "../database.types";
-import { useInsertOrder } from "../api/orders";
-import { useRouter } from "expo-router";
-import { useInsertOrderItems } from "../api/order-items";
-
 type CartType={
     items:CartItem[];
     addItem:(product:Tables<'products'>,size:CartItem['size'])=>void;
     updateQuantity:(itemId:string,quantity:-1|1)=>void;
     total:number;
-    checkout:()=>void;
 }
 type Product=Tables<'products'>;
 //cart context is used to manage the cart state in the app
@@ -20,7 +15,6 @@ export const CartContext = createContext<CartType>({
     addItem:()=>{},
     updateQuantity:()=>{},
     total:0,
-    checkout:()=>{}
 });
 //two properties are used in the cart context
 //consumer and provider
@@ -29,9 +23,6 @@ export const CartContext = createContext<CartType>({
 
 
 const CartProvider = ({children}:PropsWithChildren) => {
-    const {mutate:insertOrder}=useInsertOrder();
-    const {mutate:insertOrderItems}=useInsertOrderItems();
-    const router=useRouter();
     const [items,setItems]=useState<CartItem[]>([]);
     const addItem=(product:Product,size:CartItem['size'])=>{
         //  TODO'S
@@ -61,42 +52,12 @@ const CartProvider = ({children}:PropsWithChildren) => {
             :{...item,quantity:item.quantity+quantity}
         ).filter(item=>item.quantity>0));  
     }
-    
     const total=items.reduce((sum,item)=>sum+item.product.price*item.quantity,0);
-    const clearCart=()=>
-        {
-            setItems([]);
-        }
-    const checkout=()=>{
-        insertOrder({total},
-            {onSuccess:(data)=>saveOrderItems(data)
-     } 
-    );    
-    };
-    
-    const saveOrderItems=(data:Tables<'orders'>)=>{
-     const orderItems=items.map(item=>({
-            order_id:data.id,
-            product_id:item.product_id,
-            quantity:item.quantity,
-            size:item.size
-        }));
-
-        insertOrderItems(orderItems,{
-            onSuccess:()=>{
-                clearCart();
-                router.push('/orders');
-            }
-        });
-     }
-    
     return (
-        <CartContext.Provider value={{items,addItem,updateQuantity,total,checkout}}>
+        <CartContext.Provider value={{items,addItem,updateQuantity,total}}>
             {children}
         </CartContext.Provider>
     )
-
-
 }
 
 export default CartProvider

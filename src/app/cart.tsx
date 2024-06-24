@@ -14,7 +14,7 @@ import Button from '../components/Button'
 //prop drilling is passing the props from the parent to the child component
 //context is used to avoid prop drilling
 const CartScreen = () => {
-  const {items,total,checkout}=useCart();
+  const {items,total}=useCart();
 
   return (
     <View style={{padding:10}}>
@@ -24,7 +24,7 @@ const CartScreen = () => {
       contentContainerStyle={{gap:10}}     
       />
       <Text style={{marginTop:20,fontSize:20,fontWeight:'500'}}>Total:${total}</Text>
-      <Button onPress={checkout} text="Checkout"/>
+      <Button text="Checkout"/>
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
   
     </View>
