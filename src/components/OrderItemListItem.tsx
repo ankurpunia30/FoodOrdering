@@ -5,8 +5,9 @@ import { useSegments } from 'expo-router';
 import Colors from '../constants/Colors';
 import { defaultPizzaImage } from '../components/ProductListItem';
 import ProductListItem from './ProductListItem';
+import { Tables } from '../types';
 type OrderItemListItemProps = {
-    item:OrderItem
+    item:{products:Tables<'products'>}&Tables<'order_item'>
 }
 
 const OrderItemListItem = ({item}:OrderItemListItemProps) => {

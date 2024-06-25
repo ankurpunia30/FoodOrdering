@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,FlatList } from 'react-native'
+import { StyleSheet, Text, View,FlatList, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { Stack, useLocalSearchParams } from 'expo-router'
 import  orders  from '../../../../assets/data/orders'
@@ -7,10 +7,17 @@ import OrderItemListItem from '../../../components/OrderItemListItem'
 import Colors from '../../../constants/Colors'
 import { Pressable } from 'react-native'
 import { OrderStatusList}  from '../../../types'
+import { useOrderDetails } from '@/src/api/orders'
 const OrderDetailsScreen = () => {
-  const {id}=useLocalSearchParams();
-  const order=orders.find((order)=>order.id.toString()===id);
-  if(!order) return <Text>Order not found</Text>;
+  const {id:idString}=useLocalSearchParams();
+  const id=parseFloat(typeof idString==='string'?idString:'');
+  const {data:order,isLoading,error}=useOrderDetails(id);
+  //const order=orders.find((order)=>order.id.toString()===id);
+  
+  if(isLoading) 
+    return <ActivityIndicator/>
+  if(error) 
+    return <Text>{error.message}</Text>
 
   return (
     <View style={styles.container}>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View} from '@/src/components/Themed';
 import { ActivityIndicator, FlatList } from 'react-native';
 import ProductListItem from '@/src/components/ProductListItem';
-import { useProductList } from '@/src/api';
+import { useProductList } from '@/src/api/products';
 import { supabase } from '@/src/lib/supabase';
 import { useQuery } from '@tanstack/react-query';
 
