@@ -49,10 +49,10 @@ const {addItem}=useCart();
                   </Pressable>
                 </Link>
               ),}} />
-      <Stack.Screen  options={{title:product.name}} />        
-      <Image source={{uri:product.image|| defaultPizzaImage}} style={styles.image}/>
-      <Text style={styles.title}>{product.name}</Text>
-      <Text style={styles.price}>${product.price}</Text>
+      <Stack.Screen  options={{title:product?.name}} />        
+      <Image source={{uri:product?.image|| defaultPizzaImage}} style={styles.image}/>
+      <Text style={styles.title}>{product?.name}</Text>
+      <Text style={styles.price}>${product?.price}</Text>
     
     </View>
   )

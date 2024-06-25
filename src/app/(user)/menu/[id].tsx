@@ -2,7 +2,7 @@ import { View, Text ,Image,StyleSheet,Pressable, ActivityIndicator} from 'react-
 import React from 'react'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { Stack } from "expo-router";
-import products from '@/assets/data/products';
+
 import { defaultPizzaImage } from '@/src/components/ProductListItem';
 import { useState } from 'react';
 import Button from '@/src/components/Button';
@@ -30,8 +30,8 @@ const {addItem}=useCart();
   if(error) return <Text>{error.message}</Text>
  return (
     <View style={styles.container}>
-      <Stack.Screen  options={{title:product.name}} />        
-      <Image source={{uri:product.image|| defaultPizzaImage}} style={styles.image}/>
+      <Stack.Screen  options={{title:product?.name}} />        
+      <Image source={{uri:product?.image|| defaultPizzaImage}} style={styles.image}/>
       <Text>Select size</Text>
       <View style={styles.sizes}>
       {sizes.map((size)=>(
@@ -47,7 +47,7 @@ const {addItem}=useCart();
       
       </View>
       
-      <Text style={styles.price}>${product.price}</Text>
+      <Text style={styles.price}>${product?.price}</Text>
       <Button onPress={addToCart} text='Add to cart'/>
     </View>
   )
