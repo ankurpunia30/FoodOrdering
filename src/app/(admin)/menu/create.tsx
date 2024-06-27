@@ -7,7 +7,10 @@ import * as ImagePicker from 'expo-image-picker';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router'
 import { useDeleteProduct, useInsertProduct, useUpdateProduct } from '@/src/api/products'
 import { useProduct } from '.'
-
+import { supabase } from '@/src/lib/supabase'
+import { decode } from 'base64-arraybuffer'
+import { randomUUID } from 'expo-crypto'
+import *as FileSystem from 'expo-file-system'
  const createProductScreen = () => {
     const [name,setName]=useState('')
     const [price,setPrice]=useState('')
@@ -73,11 +76,11 @@ const onCreate = async () => {
     return;
   }
 
-  
+  const imagePath = await uploadImage();
 
   // Save in the database
   insertProduct(
-    { name, price: parseFloat(price), image },
+    { name, price: parseFloat(price), image:imagePath },
     {
       onSuccess: () => {
         resetField();
@@ -135,6 +138,25 @@ const onCreate = async () => {
         }
       ])
   }
+
+  const uploadImage = async () => {
+    if (!image?.startsWith('file://')) {
+      return;
+    }
+  
+    const base64 = await FileSystem.readAsStringAsync(image, {
+      encoding: 'base64',
+    });
+    const filePath = `${randomUUID()}.png`;
+    const contentType = 'image/png';
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .upload(filePath, decode(base64), { contentType });
+  
+    if (data) {
+      return data.path;
+    }
+  };
 
   return (
     <View style={styles.container}>

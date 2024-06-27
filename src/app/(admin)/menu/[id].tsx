@@ -12,6 +12,7 @@ import { PizzaSize } from '@/src/types';
 import { FontAwesome } from '@expo/vector-icons';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useProduct } from '.';
+import RemoteImage from '@/src/components/RemoteImage';
 const sizes:PizzaSize[]=['S','M','L','XL'];
 const ProductDetailsScreen = () => {
   //useLocalSearchParams is a hook that is used to get the id from the url
@@ -50,7 +51,10 @@ const {addItem}=useCart();
                 </Link>
               ),}} />
       <Stack.Screen  options={{title:product?.name}} />        
-      <Image source={{uri:product?.image|| defaultPizzaImage}} style={styles.image}/>
+      <RemoteImage
+       path={product?.image}
+       fallback={defaultPizzaImage}
+       style={styles.image}/>
       <Text style={styles.title}>{product?.name}</Text>
       <Text style={styles.price}>${product?.price}</Text>
     

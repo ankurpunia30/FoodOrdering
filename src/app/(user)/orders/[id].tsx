@@ -7,13 +7,14 @@ import OrderItemListItem from '../../../components/OrderItemListItem'
 import Colors from '../../../constants/Colors'
 import { Pressable } from 'react-native'
 import { OrderStatusList}  from '../../../types'
-import { useOrderDetails } from '@/src/api/orders'
+import { useOrderDetails, useUpdateOrder } from '@/src/api/orders'
+import { useUpdateOrderSubscription } from '@/src/api/orders/subscriptions'
 const OrderDetailsScreen = () => {
   const {id:idString}=useLocalSearchParams();
   const id=parseFloat(typeof idString==='string'?idString:'');
   const {data:order,isLoading,error}=useOrderDetails(id);
   //const order=orders.find((order)=>order.id.toString()===id);
-  
+  useUpdateOrderSubscription(id);
   if(isLoading) 
     return <ActivityIndicator/>
   if(error) 

@@ -9,6 +9,7 @@ import Button from '@/src/components/Button';
 import { useCart } from '@/src/provider/CartProvider';
 import { PizzaSize } from '@/src/types';
 import { useProduct } from '../../(admin)/menu';
+import RemoteImage from '@/src/components/RemoteImage';
 const sizes:PizzaSize[]=['S','M','L','XL'];
 const ProductDetailsScreen = () => {
   //useLocalSearchParams is a hook that is used to get the id from the url
@@ -31,7 +32,10 @@ const {addItem}=useCart();
  return (
     <View style={styles.container}>
       <Stack.Screen  options={{title:product?.name}} />        
-      <Image source={{uri:product?.image|| defaultPizzaImage}} style={styles.image}/>
+      <RemoteImage 
+      path={product?.image}
+      fallback={defaultPizzaImage}
+      style={styles.image}/>
       <Text>Select size</Text>
       <View style={styles.sizes}>
       {sizes.map((size)=>(
