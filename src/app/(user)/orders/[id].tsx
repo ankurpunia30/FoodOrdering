@@ -17,15 +17,15 @@ const OrderDetailsScreen = () => {
   useUpdateOrderSubscription(id);
   if(isLoading) 
     return <ActivityIndicator/>
-  if(error) 
-    return <Text>{error.message}</Text>
+  if(error || !order) 
+    return <Text>unable to fetch</Text>
 
   return (
     <View style={styles.container}>
       <Stack.Screen options={{title:`Order#${order.id}`}} />
       <OrderListItem order={order}/>
       <FlatList
-      data={order.order_items}
+      data={order.order_item}
       contentContainerStyle={{gap:10}}
       
     renderItem={({item})=><OrderItemListItem item={item}/>

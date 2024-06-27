@@ -19,6 +19,7 @@ const ProductListItem = ({product}:ProductListItemProps) => {
         <Link href=
     { `/${segment[0]}/menu/${product.id}`} asChild>
       <Pressable style={styles.container}>
+    
     <RemoteImage 
     path={product.image}
     fallback={defaultPizzaImage}
